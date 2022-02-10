@@ -111,7 +111,7 @@ For example
 import com.padverb.sqlps._
 import com.padverb.sqlps.arg._ // implicit sql"...", aLong, aString, etc...
 
-// extract a Tuple2[Long,Int] from a ResultSet
+// extract a Tuple2[Long,String] from a ResultSet
 val extractT:java.sql.ResultSet=>Tuple2[Long,String]=rs=>(rs.getLong("y"),rs.getString("z"))
 
 
