@@ -51,6 +51,6 @@ System.err.println("q.getSQL()="+q.getSQL())
 in the class [arg](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/arg.html
 an new implisit string interpolation method `sql"""...."""` is implemented
 along with definition of methods
-[aLong(Long,String):SQLArg](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/arg.html#aLong(Long,String):SQLArg)
-[aString(String,String):SQLArg](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/arg.html#aString(String,String):SQLArg)
-[aInt(Int,String):SQLArg](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/arg.html#aInt(Int,String):SQLArg), and others for other types.
+[aLong(Long,String):SQLArg](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/arg$.html#aLong(Long,String):SQLArg)
+[aString(String,String):SQLArg](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/arg$.html#aString(String,String):SQLArg)
+[aInt(Int,String):SQLArg](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/arg$.html#aInt(Int,String):SQLArg), and others for other types.
