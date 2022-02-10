@@ -136,7 +136,7 @@ The difference with this library is that SQL-pieces (of
 type) can itself be interpolated by the `sql""" ... """` interpolator,
 e.g:
 ```
-val q1=sql"""SELECT y FROM tableX WHERE z=${aString("abc")}"""
+val q1=sql"""SELECT z FROM tableX WHERE z=${aString("abc")}"""
 val q=sql""" SELECT * FROM tableX WHERE x=${aLong(33)} AND z IN (${q1})"""
 // created q:SQLst q.getSQL()=" SELECT * FROM tableX WHERE x=? AND z IN (SELECT y FROM tableX WHERE z=?)"
 ```
