@@ -50,12 +50,12 @@ import com.padverb.sqlps.arg._ // implicit sql"...", aLong, aString, etc...
 val q=sql"""SELECT * FROM tableX WHERE y=${aLong(33)}"""
 // created q:SQLst ; q.getSQL()="SELECT * FROM tableX WHERE y=?"
 ```
-in the class [arg](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/arg.html
-an new implisit string interpolation method `sql"""...."""` is implemented
+in the object [arg](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/arg.html)
+an implisit string interpolation method `sql"""...."""` is implemented
 along with definition of methods
 [aLong(Long,String):SQLArg](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/arg$.html#aLong(Long,String):SQLArg)
 [aString(String,String):SQLArg](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/arg$.html#aString(String,String):SQLArg)
-[aInt(Int,String):SQLArg](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/arg$.html#aInt(Int,String):SQLArg), and others for other types.
+[aInt(Int,String):SQLArg](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/arg$.html#aInt(Int,String):SQLArg), and others for other types. One can implement his own methods as necessary.
 
 These methods return an instance of
 [SQLArg](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLArg.html)

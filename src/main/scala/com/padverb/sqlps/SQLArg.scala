@@ -7,7 +7,7 @@ trait SQLArg {
     *  For multiple arguments the number of ? is equal to the number of arguments.
     */
   def getSQL():String
-  /** Initialize prepared statement.
+  /** Initialize prepared statement, returns the number of SQL arguments set (typicaly 1).
     *  @param s Prepared statement to initialize.
     *  @param n The number (SQL count, base 1) of first argument to initialize.
     *  @return The number or arguments set.
