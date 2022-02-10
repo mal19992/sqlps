@@ -48,10 +48,7 @@ An example:
 import com.padverb.sqlps.arg._ // implicit sql"...", aLong, aString, etc...
 
 val q=sql"""SELECT * FROM tableX WHERE y=${aLong(33)}"""
-// created q:SQLst
-
-System.err.println("q.getSQL()="+q.getSQL())
-// prints q.getSQL()=SELECT * FROM tableX WHERE y=?
+// created q:SQLst ; q.getSQL()="SELECT * FROM tableX WHERE y=?"
 ```
 in the class [arg](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/arg.html
 an new implisit string interpolation method `sql"""...."""` is implemented
@@ -81,7 +78,7 @@ types the value to be inserted to SQL is the one returned by
 ```
 val q=sql"""SELECT * FROM tableX WHERE ${aLong(33,"y=?")}""" // q:SQLst
 ```
-`q.getSQL()` also produces
+This `q.getSQL()` also produces
 `SELECT * FROM tableX WHERE y=?`,
 same as in the example above.
 
