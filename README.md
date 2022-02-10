@@ -39,5 +39,18 @@ The later has two important methods
 [getSQL](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLst.html#getSQL():String) to obtain SQL request as String and
 [setAllValues](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLst.html#setAllValues(s:java.sql.PreparedStatement):Int) to initialize a prepared statement with the values.
 
-To simplify the syntax a string interpolation with `sql"""...."""` is implementd.
+To simplify the syntax a string interpolation with `sql"""...."""` is implemented.
 An example:
+```
+import com.padverb.sqlps.arg._
+
+val q=sql"""SELECT * FROM tableX WHERE y=${aLong(33)}"""
+System.err.println("q.getSQL()="+q.getSQL())
+// prints q.getSQL()=SELECT * FROM tableX WHERE y=?
+```
+in the class [arg](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/arg.html
+an new implisit string interpolation method `sql"""...."""` is implemented
+along with definition of methods
+[aLong(Long,String):SQLArg](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/arg.html#aLong(Long,String):SQLArg)
+[aString(String,String):SQLArg](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/arg.html#aString(String,String):SQLArg)
+[aInt(Int,String):SQLArg](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/arg.html#aInt(Int,String):SQLArg), and others for other types.
