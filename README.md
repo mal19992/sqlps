@@ -111,9 +111,14 @@ For example
 import com.padverb.sqlps._
 import com.padverb.sqlps.arg._ // implicit sql"...", aLong, aString, etc...
 
+// extract a Tuple2[Long,Int] from a ResultSet
+val extractT:java.sql.ResultSet=>Tuple2[Long,String]=rs=>(rs.getLong("y"),rs.getString("z"))
+
+
+
 val q=sql"""SELECT * FROM tableX WHERE y=${aLong(33)} and z=${aString("abc")}"""
 // created q:SQLst, getSQL() is: SELECT * FROM tableX WHERE y=? and z=?
-val res=ReadObjs(q,rs=>(rs.getLong("y"),rs.getString("z")))(some_jdbc_connection)
+val res=ReadObjs(q,extractT)(some_jdbc_connection)
 ```
 the result is a `Seq[T]`, where the type `T`
 is determined by the second argument type (a function extracting
@@ -171,7 +176,10 @@ and the values will be properly binded by `q.selAllValues(st)` or using
 [ReadObjs](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/ReadObjs$.html)
 wrapper
 ```
-val result=ReadObjs(q,rs=>(rs.getLong("x"),rs.getInt("i")))(some_jdbc_connection)
+// extract a Tuple2[Long,Int] from a ResultSet
+val extractT:java.sql.ResultSet=>Tuple2[Long,Int]=rs=>(rs.getLong("x"),rs.getInt("i"))
+.....
+val res=ReadObjs(q,extractT)(some_jdbc_connection)
 ```
 where the method
 [mergeWithSeparator](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLst$.html#mergeWithSeparator(Seq[SQLst],String):SQLst)
