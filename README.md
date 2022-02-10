@@ -36,8 +36,8 @@ The concept is to have two types:
 * [SQLst](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLst.html) as a container for SQL query or it's portion.
 
 The later has two important methods
-[getSQL](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLst.html#getSQL) to obtain SQL request as String and
-[setAllValues](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLst.html#setAllValues) to initialize a prepared statement with the values.
+[getSQL](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLst.html#getSQL():String) to obtain SQL request as String and
+[setAllValues](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLst.html#setAllValues(s:java.sql.PreparedStatement):Int) to initialize a prepared statement with the values.
 
 To simplify the syntax a string interpolation with `sql"""...."""` is implementd.
 An example:
