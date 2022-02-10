@@ -69,7 +69,7 @@ val q=sql"""SELECT * FROM ${tableName} WHERE y=${aLong(33)}"""
 ```
 The interpolator distinguishes prepared statement and the values
 to be directly interpolated by the type. Two types
-are treated specialy by the `sql` interpolator:
+are treated specially by the `sql` interpolator:
 [SQLArg](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLArg.html)
 and
 [SQLst](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLst.html).
@@ -88,7 +88,7 @@ The second method of
 [SQLst](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLst.html)
 is the
 [setAllValues](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLst.html#setAllValues(s:java.sql.PreparedStatement):Int)
-that performs SQL initialization of the prepared statemenets, e.g.:
+that performs SQL initialization of the prepared statements, e.g.:
 ```
 import com.padverb.sqlps.arg._ // implicit sql"...", aLong, aString, etc...
 
@@ -101,7 +101,7 @@ q.setAllValues(st) // will issue st.setLong(1,33), st.setString(2,"abc")
 
 This way a
 [SQLst](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLst.html)
-object carries an information abouth both: SQL statement and prepared statement arguments initialization.
+object carries an information about both: SQL statement and prepared statement arguments initialization.
 There are two convenience wrappers:
 * [ReadObjs](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/ReadObjs$.html) Read multiple objects
 * [ReadObjOpt](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/ReadObjOpt$.html) Read a single object
@@ -151,7 +151,7 @@ val q=sql""" SELECT * FROM tableX WHERE x=${aLong(33)} AND z IN (${q1})"""
 when issued `q.setAllValues(st)` the SQL prepared statement will be properly initialized regardless the
 order/depth of used "sql pieces" of [SQLst](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLst.html) type. Inside the interpolator there is a recursive tree walk, this makes it possible.
 
-The proposed library alows a seamless integration
+The proposed library allows a seamless integration
 of scala language variables and SQL prepared statement variables.
 The goal was achieved by introduction of two types
 [SQLArg](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLArg.html)
@@ -172,7 +172,7 @@ s=for((x,i)<-data) yield sql"""(x=${aLong(x)},i=${aInt(i)})""",
 separator=",")+ sql" RETURNING * "
 // will create q.getSQL()="INSERT INTO VALUES (x=?,i=?),(x=?,i=?),(x=?,i=?) RETURNING * "
 ```
-and the values will be properly binded by `q.selAllValues(st)` or using 
+and the values will be properly bound by `q.selAllValues(st)` or using 
 [ReadObjs](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/ReadObjs$.html)
 wrapper
 ```
