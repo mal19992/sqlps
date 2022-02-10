@@ -190,6 +190,6 @@ together.
 # License
 This software is available under the
 [GPLV3](https://github.com/mal19992/sqlps/blob/master/LICENSE)
-license. If you need this software at
+license. If you need this software under
 any other license -- it can be made available
-under a fee of $200.
+for a fee of $200.
