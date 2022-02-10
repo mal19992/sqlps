@@ -18,7 +18,12 @@ class SQLst(private val parts:scala.collection.immutable.Seq[String],private val
   def appendString(s:String):SQLst=SQLst.merge(this,SQLst.fromString(s))
   def prependString(s:String):SQLst=SQLst.merge(SQLst.fromString(s),this)
 
+  /** An alias for [[SQLst.appendString]].
+    */
   def +(s:String)=appendString(s)
+
+  /** Merges this object with another one.
+    */
   def +(s:SQLst)=SQLst.merge(this,s)
 
 }
