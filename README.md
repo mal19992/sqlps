@@ -164,7 +164,7 @@ s=for((x,i)<-data) yield sql"""(x=${aLong(x)},i=${aInt(i)})""",
 separator=",")+ sql" RETURNING * "
 // will create q.getSQL()="INSERT INTO VALUES (x=?,i=?),(x=?,i=?),(x=?,i=?) RETURNING * "
 ```
-and the values will properly binded by `q.selAllValues(st)` or using 
+and the values will be properly binded by `q.selAllValues(st)` or using 
 [ReadObjs](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/ReadObjs$.html)
 wrapper
 ```
