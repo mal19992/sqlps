@@ -39,12 +39,17 @@ The later has two important methods
 [getSQL](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLst.html#getSQL():String) to obtain SQL request as String and
 [setAllValues](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLst.html#setAllValues(s:java.sql.PreparedStatement):Int) to initialize a prepared statement with the values.
 
-To simplify the syntax a string interpolation with `sql"""...."""` is implemented.
+To simplify the syntax a string interpolation with `sql"""...."""` is implemented
+to create an object of
+[SQLst](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLst.html)
+type
 An example:
 ```
-import com.padverb.sqlps.arg._
+import com.padverb.sqlps.arg._ // implicit sql"...", aLong, aString, etc...
 
 val q=sql"""SELECT * FROM tableX WHERE y=${aLong(33)}"""
+// created q:SQLst
+
 System.err.println("q.getSQL()="+q.getSQL())
 // prints q.getSQL()=SELECT * FROM tableX WHERE y=?
 ```
@@ -54,3 +59,114 @@ along with definition of methods
 [aLong(Long,String):SQLArg](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/arg$.html#aLong(Long,String):SQLArg)
 [aString(String,String):SQLArg](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/arg$.html#aString(String,String):SQLArg)
 [aInt(Int,String):SQLArg](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/arg$.html#aInt(Int,String):SQLArg), and others for other types.
+
+These methods return an instance of
+[SQLArg](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLArg.html)
+class that is used for prepared statement initialization.
+Regular string interpolation can be used as well
+```
+val tableName="tableX"
+val q=sql"""SELECT * FROM ${tableName} WHERE y=${aLong(33)}"""
+```
+The interpolator distinguishes prepared statement and the values
+to be directly interpolated by their type. Two types
+are treated specialy by the `sql` interpolator:
+[SQLArg](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLArg.html)
+and
+[SQLst](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLst.html).
+
+For [SQLArg](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLArg.html)
+types the value to be inserted to SQL is the one returned by 
+[getSQL()](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLArg.html#getSQL():String) method, by default it is `?`, but it can be changed to anything, e.g.:
+```
+val q=sql"""SELECT * FROM tableX WHERE ${aLong(33,"y=?")}""" // q:SQLst
+```
+`q.getSQL()` also produces
+`SELECT * FROM tableX WHERE y=?`,
+same as in the example above.
+
+The second method of
+[SQLst](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLst.html)
+is the
+[setAllValues](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLst.html#setAllValues(s:java.sql.PreparedStatement):Int)
+that performs SQL initialization of the prepared statemenets, e.g.:
+```
+import com.padverb.sqlps.arg._ // implicit sql"...", aLong, aString, etc...
+
+val q=sql"""SELECT * FROM tableX WHERE y=${aLong(33)} and z=${aString("abc")}"""
+// created q:SQLst, getSQL() is: SELECT * FROM tableX WHERE y=? and z=?
+
+val st=some_jdbc_connection.prepareStatement(q.getSQL())
+q.setAllValues(st) // will issue st.setLong(1,33), st.setString(2,"abc")
+```
+
+This way a [SQLst](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLst.html) object carry information abouth both: SQL statement and prepared statement arguments initialization.
+There are two convenience wrappers:
+* [ReadObjs](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/ReadObjs$.html) Read multiple objects
+* [ReadObjOpt](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/ReadObjOpt$.html) Read a single object
+
+For example
+```
+import com.padverb.sqlps._
+import com.padverb.sqlps.arg._ // implicit sql"...", aLong, aString, etc...
+
+val q=sql"""SELECT * FROM tableX WHERE y=${aLong(33)} and z=${aString("abc")}"""
+// created q:SQLst, getSQL() is: SELECT * FROM tableX WHERE y=? and z=?
+val result=ReadObjs(q,rs=>(rs.getLong("y"),rs.getString("z")))(some_jdbc_connection)
+```
+will return the result determined by the second argument type (a function extracting
+the data from `java.sql.ResultSet`.
+This extractor function (e.g. `extractTypeT:java.sql.ResultSet=>T` and `extractTypeR:java.sql.ResultSet=>R`)
+is typically stored somewhere and SQL request my look like:
+```
+val dataTypeT=ReadObjs(
+		sql"""SELECT * FROM tableX WHERE y=${aLong(33)} and z=${aString("abc")}"""
+    		extractTypeT)(some_jdbc_connection)
+// the scala.collection.Seq[T] is returned
+
+val dataTypeR=ReadObjs(
+		sql"""SELECT * FROM tableX WHERE y=${aLong(33)} and z=${aString("abc")}"""
+    		extractTypeR)(some_jdbc_connection)
+// the Option[R] is returned
+```
+
+This is a typical SQL interpolation functionality, used in most java/scala frameworks. 
+The difference with this library is that SQL-pieces (of
+[SQLst](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLst.html)
+type) can itself be interpolated by the `sql""" ... """` interpolator,
+e.g:
+```
+val q1=sql"""SELECT y FROM tableX WHERE z=${aString("abc")}"""
+val q=sql""" SELECT * FROM tableX WHERE x=${aLong(33)} AND z IN (${q1})"""
+// created q:SQLst q.getSQL()=" SELECT * FROM tableX WHERE x=? AND z IN (SELECT y FROM tableX WHERE z=?)"
+```
+when issued `q.setAllValues(st)` the SQL prepared statement will be properly initialized regardless the
+order/depth of used "sql pieces" of [SQLst](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLst.html) type. Inside the interpolator there is a recursive tree walk, that make this possible.
+
+This way proposed library alows a seamless integration
+of scala language variables and SQL prepared statement variables.
+The goal was achieved by introduction of two types
+[SQLArg](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLArg.html)
+and
+[SQLst](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLst.html)
+and treating them specially during `sql"..."` interpolation.
+
+In some cases
+it is convenient to create
+[SQLst](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLst.html)
+directly, without `sql"..."` interpolation, e.g. let we have an array of `data:(Long,Int)` tuples,
+then
+```
+val data=List((101L,1),(102L,2),(103L,3))
+
+val q=sql"INSERT INTO VALUES "+SQLst.mergeWithSeparator(
+s=for((x,i)<-data) yield sql"""(x=${aLong(x)},i=${aInt(i)})""",
+separator=",")+ sql" RETURNING * "
+// will create q.getSQL()="INSERT INTO VALUES (x=?,i=?),(x=?,i=?),(x=?,i=?) RETURNING * "
+```
+and the values will properly binded by `q.selAllValues(st)` or using 
+[ReadObjs](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/ReadObjs$.html)
+wrapper
+```
+val result=ReadObjs(q,rs=>(rs.getLong("x"),rs.getString("i")))(some_jdbc_connection)
+```
