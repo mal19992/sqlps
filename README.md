@@ -32,8 +32,8 @@ it can combine both non--sql (e.g. strings) and sql, the distinction
 is made by the object type.
 
 The concept is to have two types:
->[SQLArg](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLArg.html) for a single prepared statement argument
->[SQLst](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLst.html) as a container for SQL query or it's portion.
+* [SQLArg](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLArg.html) for a single prepared statement argument
+* [SQLst](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLst.html) as a container for SQL query or it's portion.
 
 The later has two important methods
 [getSQL](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLst.html#getSQL) to obtain SQL request as String and
