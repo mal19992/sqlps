@@ -141,9 +141,9 @@ val q=sql""" SELECT * FROM tableX WHERE x=${aLong(33)} AND z IN (${q1})"""
 // created q:SQLst q.getSQL()=" SELECT * FROM tableX WHERE x=? AND z IN (SELECT y FROM tableX WHERE z=?)"
 ```
 when issued `q.setAllValues(st)` the SQL prepared statement will be properly initialized regardless the
-order/depth of used "sql pieces" of [SQLst](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLst.html) type. Inside the interpolator there is a recursive tree walk, that make this possible.
+order/depth of used "sql pieces" of [SQLst](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLst.html) type. Inside the interpolator there is a recursive tree walk, this makes it possible.
 
-This way proposed library alows a seamless integration
+Hence the proposed library alows a seamless integration
 of scala language variables and SQL prepared statement variables.
 The goal was achieved by introduction of two types
 [SQLArg](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLArg.html)
@@ -168,5 +168,5 @@ and the values will properly binded by `q.selAllValues(st)` or using
 [ReadObjs](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/ReadObjs$.html)
 wrapper
 ```
-val result=ReadObjs(q,rs=>(rs.getLong("x"),rs.getString("i")))(some_jdbc_connection)
+val result=ReadObjs(q,rs=>(rs.getLong("x"),rs.getInt("i")))(some_jdbc_connection)
 ```
