@@ -4,7 +4,7 @@ version := "0.1.0"
 
 scalaVersion := "2.13.8"
 
-target in Compile in doc := baseDirectory.value / "docs/"
+target in Compile in doc := baseDirectory.value / "docs/api/"
 
 libraryDependencies ++= Seq(
 
