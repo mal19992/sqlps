@@ -74,7 +74,7 @@ and
 
 For [SQLArg](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLArg.html)
 types the value to be inserted to SQL is the one returned by 
-[getSQL()](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLArg.html#getSQL():String) method, by default it is `?`, but it can be changed to anything, e.g.:
+[getSQL()](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLArg.html#getSQL():String) method, by default it is `?`, it can be changed to anything, e.g.:
 ```
 val q=sql"""SELECT * FROM tableX WHERE ${aLong(33,"y=?")}""" // q:SQLst
 ```
@@ -97,7 +97,9 @@ val st=some_jdbc_connection.prepareStatement(q.getSQL())
 q.setAllValues(st) // will issue st.setLong(1,33), st.setString(2,"abc")
 ```
 
-This way a [SQLst](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLst.html) object carry information abouth both: SQL statement and prepared statement arguments initialization.
+This way a
+[SQLst](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLst.html)
+object carries an information abouth both: SQL statement and prepared statement arguments initialization.
 There are two convenience wrappers:
 * [ReadObjs](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/ReadObjs$.html) Read multiple objects
 * [ReadObjOpt](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/ReadObjOpt$.html) Read a single object
@@ -113,8 +115,8 @@ val result=ReadObjs(q,rs=>(rs.getLong("y"),rs.getString("z")))(some_jdbc_connect
 ```
 will return the result determined by the second argument type (a function extracting
 the data from `java.sql.ResultSet`.
-This extractor function (e.g. `extractTypeT:java.sql.ResultSet=>T` and `extractTypeR:java.sql.ResultSet=>R`)
-is typically stored somewhere and SQL request my look like:
+Extractor functions (e.g. `extractTypeT:java.sql.ResultSet=>T` and `extractTypeR:java.sql.ResultSet=>R`)
+are typically stored somewhere and an SQL request looks like:
 ```
 val dataTypeT=ReadObjs(
 		sql"""SELECT * FROM tableX WHERE y=${aLong(33)} and z=${aString("abc")}"""
@@ -167,3 +169,8 @@ wrapper
 ```
 val result=ReadObjs(q,rs=>(rs.getLong("x"),rs.getInt("i")))(some_jdbc_connection)
 ```
+where the method
+[mergeWithSeparator](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLst$.html#mergeWithSeparator(Seq[SQLst],String):SQLst)
+is used to combine individual
+[SQLst](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLst.html)
+together.
