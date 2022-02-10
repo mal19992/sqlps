@@ -26,6 +26,11 @@ intepreted as the place to include the value of a prepared statement.
 Currently a "direct inclusion" of values to SQL request is considered insecure and
 [java.sql.PreparedStatement](https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html)
 is the way to go. Proposed library addresses the problem in a type--safe way. It is small (below 200 lines) and fast.
+In contrast with other wrappers
+[TINKOFF](https://habr.com/ru/company/tinkoff/blog/193396/)
+it can combine both non--sql (e.g. strings) and sql, the distinction
+is made by the object type.
+
 
 
 

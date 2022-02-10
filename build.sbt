@@ -4,6 +4,8 @@ version := "0.1.0"
 
 scalaVersion := "2.13.8"
 
+target in Compile in doc := baseDirectory.value / "doc"
+
 libraryDependencies ++= Seq(
 
   "com.typesafe.play" %% "play-json" % "2.10.0-RC5",
