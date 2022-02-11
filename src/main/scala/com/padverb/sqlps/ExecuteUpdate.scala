@@ -7,7 +7,8 @@ package com.padverb.sqlps;
   */
 class ExecuteUpdate(
   private val toSearch: SQLst,
-  private val flagClosePreparedStatement:Boolean=true){
+  private val flagClosePreparedStatement:Boolean=true,
+  private val flagConnectionCommit:Boolean=false){
 
   def apply(connection:java.sql.Connection):Int = {
     val st=connection.prepareStatement(toSearch.getSQL())
@@ -16,6 +17,9 @@ class ExecuteUpdate(
     val result=st.executeUpdate();
     if(flagClosePreparedStatement){
       st.close()
+    }
+    if(flagConnectionCommit){
+      connection.commit()
     }
     result;
   }

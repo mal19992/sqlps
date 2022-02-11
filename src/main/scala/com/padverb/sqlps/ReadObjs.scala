@@ -9,7 +9,8 @@ package com.padverb.sqlps;
 class ReadObjs[T](
   private val toSearch: SQLst,
   private val extractT:java.sql.ResultSet=>T,
-  private val flagClosePreparedStatement:Boolean=true) {
+  private val flagClosePreparedStatement:Boolean=true,
+  private val flagConnectionCommit:Boolean=false) {
 
   /** Returns the data as a sequence of objects.
   * @return The data.
@@ -25,6 +26,9 @@ class ReadObjs[T](
     }
     if(flagClosePreparedStatement){
       st.close()
+    }
+    if(flagConnectionCommit){
+      connection.commit()
     }
     result;
   }
