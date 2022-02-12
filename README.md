@@ -1,4 +1,4 @@
-# sqlps
+# [sqlps](https://github.com/mal19992/sqlps)
 Scala JDBC prepared statement library
 
 
@@ -188,7 +188,7 @@ is used to combine individual
 together.
 
 # License
-This software is available under the
+[This software](https://github.com/mal19992/sqlps) is available under the
 [GPLV3](https://github.com/mal19992/sqlps/blob/master/LICENSE)
 license. If you need this software under
 any other license -- it can be made available
