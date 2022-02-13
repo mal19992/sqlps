@@ -183,6 +183,7 @@ wrapper
 val extractT:java.sql.ResultSet=>Tuple2[Long,Int]=rs=>(rs.getLong("x"),rs.getInt("i"))
 .....
 val res=ReadObjs(q,extractT)(some_jdbc_connection)
+// scala.collection.Seq[(Long,Int)] is terurned
 ```
 where the method
 [mergeWithSeparator](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLst$.html#mergeWithSeparator(Seq[SQLst],String):SQLst)
