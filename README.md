@@ -133,7 +133,7 @@ val dataTypeT=ReadObjs(
     		extractTypeT)(some_jdbc_connection)
 // scala.collection.Seq[T] is returned
 
-val dataTypeR=ReadObjs(
+val dataTypeR=ReadObjOpt(
 		sql"""SELECT * FROM tableX WHERE y=${aLong(33)} and z=${aString("abc")}"""
     		extractTypeR)(some_jdbc_connection)
 // Option[R] is returned
