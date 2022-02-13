@@ -170,12 +170,12 @@ then
 ```
 val data=List((101L,1),(102L,2),(103L,3))
 
-val q=sql"INSERT INTO VALUES "+
+val q=sql"INSERT INTO tableX VALUES "+
       SQLst.mergeWithSeparator(
     		 s=for((x,i)<-data) yield sql"""(x=${aLong(x)},i=${aInt(i)})""",
 		 separator=",")+
       " RETURNING * "
-// will create q.getSQL()="INSERT INTO VALUES (x=?,i=?),(x=?,i=?),(x=?,i=?) RETURNING * "
+// will create q.getSQL()="INSERT INTO tableX VALUES (x=?,i=?),(x=?,i=?),(x=?,i=?) RETURNING * "
 ```
 and the values will be properly bound by `q.selAllValues(st)` or using 
 [ReadObjs](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/ReadObjs$.html)
