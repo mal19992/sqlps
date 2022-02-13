@@ -175,7 +175,10 @@ val q=sql"INSERT INTO tableX VALUES "+
     		 s=for((x,i)<-data) yield sql"""(x=${aLong(x)},i=${aInt(i)})""",
 		 separator=",")+
       " RETURNING * "
-// will create q.getSQL()="INSERT INTO tableX VALUES (x=?,i=?),(x=?,i=?),(x=?,i=?) RETURNING * "
+// will create q.getSQL()=
+//   "INSERT INTO tableX VALUES (x=?,i=?),(x=?,i=?),(x=?,i=?) RETURNING * "
+// and q.setAllValues(st) will issue:
+//   st.setLong(1,101L);st.setInt(2,1);st.setLong(3,102L);st.setInt(4,2);st.setLong(5,103L);st.setInt(6,3);
 ```
 and the values will be properly bound by `q.selAllValues(st)` or using 
 [ReadObjs](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/ReadObjs$.html)
