@@ -131,12 +131,12 @@ are typically stored somewhere and an SQL request looks like:
 val dataTypeT=ReadObjs(
 		sql"""SELECT * FROM tableX WHERE y=${aLong(33)} and z=${aString("abc")}"""
     		extractTypeT)(some_jdbc_connection)
-// the scala.collection.Seq[T] is returned
+// scala.collection.Seq[T] is returned
 
 val dataTypeR=ReadObjs(
 		sql"""SELECT * FROM tableX WHERE y=${aLong(33)} and z=${aString("abc")}"""
     		extractTypeR)(some_jdbc_connection)
-// the Option[R] is returned
+// Option[R] is returned
 ```
 One can implement other wrappers as needed.
 
