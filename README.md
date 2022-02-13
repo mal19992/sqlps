@@ -126,7 +126,8 @@ the result is a `Seq[T]`, where the type `T`
 is determined by the second argument type (a function extracting
 the data from `java.sql.ResultSet` and returning an object of `T` type).
 Extractor functions (e.g. `extractTypeT:java.sql.ResultSet=>T` and `extractTypeR:java.sql.ResultSet=>R`)
-are typically stored somewhere and SQL request looks like:
+are typically defined in-place for reading simple SQL types (e.g. `Long` from `BIGINT` as `rs=>rs.getLong("fieldName")`) and are defined externally (e.g. in datatype companion object)
+for reading a multi-field datatype from a single `java.sql.ResultSet` raw. The SQL request then looks like:
 ```
 val dataTypeT=ReadObjs(
 		sql"""SELECT * FROM tableX WHERE y=${aLong(33)} and z=${aString("abc")}"""
