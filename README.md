@@ -13,7 +13,7 @@ However, in practice direct mapping of scala structures
 to SQL using some kind of DSL
 is not always a good idea as generated SQL often has it's own
 structural components and a better approach is to
-use scala structures generating a piece of SQL, these structures are 
+use scala structures generating a piece of SQL; these structures are 
 are then manually combined to an SQL request.
 
 For reading the data a wrapper of
