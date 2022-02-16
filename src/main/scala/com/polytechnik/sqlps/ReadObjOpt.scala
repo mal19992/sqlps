@@ -1,4 +1,4 @@
-package com.padverb.sqlps;
+package com.polytechnik.sqlps;
 
 /**
   * Read an object (if any). If there is more than one object in ResultSet -- throw an exception.

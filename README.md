@@ -36,33 +36,33 @@ is made by the object type.
 The
 [concept](https://mal19992.github.io/sqlps/)
 is to have two types:
-* [SQLArg](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLArg.html) for a single prepared statement argument
-* [SQLst](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLst.html) as a container for SQL query or it's portion.
+* [SQLArg](https://mal19992.github.io/sqlps/docs/api/com/polytechnik/sqlps/SQLArg.html) for a single prepared statement argument
+* [SQLst](https://mal19992.github.io/sqlps/docs/api/com/polytechnik/sqlps/SQLst.html) as a container for SQL query or it's portion.
 
 The later has two important methods:
-[getSQL](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLst.html#getSQL():String) to obtain SQL request as String and
-[setAllValues](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLst.html#setAllValues(s:java.sql.PreparedStatement):Int) to initialize a prepared statement with the values.
+[getSQL](https://mal19992.github.io/sqlps/docs/api/com/polytechnik/sqlps/SQLst.html#getSQL():String) to obtain SQL request as String and
+[setAllValues](https://mal19992.github.io/sqlps/docs/api/com/polytechnik/sqlps/SQLst.html#setAllValues(s:java.sql.PreparedStatement):Int) to initialize a prepared statement with the values.
 
 To simplify the syntax a string interpolation with `sql"...."` is implemented
 to create an object of
-[SQLst](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLst.html)
+[SQLst](https://mal19992.github.io/sqlps/docs/api/com/polytechnik/sqlps/SQLst.html)
 type
 An example:
 ```
-import com.padverb.sqlps.arg._ // implicit sql"...", aLong, aString, etc...
+import com.polytechnik.sqlps.arg._ // implicit sql"...", aLong, aString, etc...
 
 val q=sql"""SELECT * FROM tableX WHERE y=${aLong(33)}"""
 // created q:SQLst ; q.getSQL()="SELECT * FROM tableX WHERE y=?"
 ```
-in the object [arg](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/arg$.html)
+in the object [arg](https://mal19992.github.io/sqlps/docs/api/com/polytechnik/sqlps/arg$.html)
 an implicit string interpolation method `sql"...."` is set
 along with the definition of methods
-[aLong(Long,String):SQLArg](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/arg$.html#aLong(Long,String):SQLArg)
-[aString(String,String):SQLArg](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/arg$.html#aString(String,String):SQLArg)
-[aInt(Int,String):SQLArg](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/arg$.html#aInt(Int,String):SQLArg), and others for other SQL types. One can implement his own methods as necessary.
+[aLong(Long,String):SQLArg](https://mal19992.github.io/sqlps/docs/api/com/polytechnik/sqlps/arg$.html#aLong(Long,String):SQLArg)
+[aString(String,String):SQLArg](https://mal19992.github.io/sqlps/docs/api/com/polytechnik/sqlps/arg$.html#aString(String,String):SQLArg)
+[aInt(Int,String):SQLArg](https://mal19992.github.io/sqlps/docs/api/com/polytechnik/sqlps/arg$.html#aInt(Int,String):SQLArg), and others for other SQL types. One can implement his own methods as necessary.
 
 These methods return an instance of
-[SQLArg](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLArg.html)
+[SQLArg](https://mal19992.github.io/sqlps/docs/api/com/polytechnik/sqlps/SQLArg.html)
 class that is used for prepared statement initialization.
 Regular string interpolation can be used as well:
 ```
@@ -72,13 +72,13 @@ val q=sql"""SELECT * FROM ${tableName} WHERE y=${aLong(33)}"""
 The interpolator distinguishes prepared statement and the values
 to be directly interpolated by the type. Two types
 are treated specially by the `sql` interpolator:
-[SQLArg](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLArg.html)
+[SQLArg](https://mal19992.github.io/sqlps/docs/api/com/polytechnik/sqlps/SQLArg.html)
 and
-[SQLst](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLst.html).
+[SQLst](https://mal19992.github.io/sqlps/docs/api/com/polytechnik/sqlps/SQLst.html).
 
-For [SQLArg](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLArg.html)
+For [SQLArg](https://mal19992.github.io/sqlps/docs/api/com/polytechnik/sqlps/SQLArg.html)
 types the value to be inserted to SQL is the one returned by 
-[getSQL()](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLArg.html#getSQL():String) method, by default it is `?`, it can be changed to anything, e.g.:
+[getSQL()](https://mal19992.github.io/sqlps/docs/api/com/polytechnik/sqlps/SQLArg.html#getSQL():String) method, by default it is `?`, it can be changed to anything, e.g.:
 ```
 val q=sql"""SELECT * FROM tableX WHERE ${aLong(33,"y=?")}""" // q:SQLst
 ```
@@ -87,12 +87,12 @@ This `q.getSQL()` also produces
 same as in the example above.
 
 The second method of
-[SQLst](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLst.html)
+[SQLst](https://mal19992.github.io/sqlps/docs/api/com/polytechnik/sqlps/SQLst.html)
 is the
-[setAllValues](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLst.html#setAllValues(s:java.sql.PreparedStatement):Int)
+[setAllValues](https://mal19992.github.io/sqlps/docs/api/com/polytechnik/sqlps/SQLst.html#setAllValues(s:java.sql.PreparedStatement):Int)
 that performs SQL initialization of the prepared statements, e.g.:
 ```
-import com.padverb.sqlps.arg._ // implicit sql"...", aLong, aString, etc...
+import com.polytechnik.sqlps.arg._ // implicit sql"...", aLong, aString, etc...
 
 val q=sql"""SELECT * FROM tableX WHERE y=${aLong(33)} and z=${aString("abc")}"""
 // created q:SQLst, getSQL() is: SELECT * FROM tableX WHERE y=? and z=?
@@ -102,16 +102,16 @@ q.setAllValues(st) // will issue st.setLong(1,33), st.setString(2,"abc")
 ```
 
 This way a
-[SQLst](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLst.html)
+[SQLst](https://mal19992.github.io/sqlps/docs/api/com/polytechnik/sqlps/SQLst.html)
 object carries an information about both: SQL statement and prepared statement arguments initialization.
 There are two convenience wrappers:
-* [ReadObjs](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/ReadObjs$.html) Read multiple objects
-* [ReadObjOpt](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/ReadObjOpt$.html) Read a single object
+* [ReadObjs](https://mal19992.github.io/sqlps/docs/api/com/polytechnik/sqlps/ReadObjs$.html) Read multiple objects
+* [ReadObjOpt](https://mal19992.github.io/sqlps/docs/api/com/polytechnik/sqlps/ReadObjOpt$.html) Read a single object
 
 For example
 ```
-import com.padverb.sqlps._
-import com.padverb.sqlps.arg._ // implicit sql"...", aLong, aString, etc...
+import com.polytechnik.sqlps._
+import com.polytechnik.sqlps.arg._ // implicit sql"...", aLong, aString, etc...
 
 // extract a Tuple2[Long,String] from a ResultSet
 val extractT:java.sql.ResultSet=>Tuple2[Long,String]=rs=>(rs.getLong("y"),rs.getString("z"))
@@ -143,7 +143,7 @@ One can implement other wrappers as needed.
 
 This is a typical SQL interpolation functionality, used in most java/scala frameworks. 
 The difference with this library is that SQL-pieces (of
-[SQLst](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLst.html)
+[SQLst](https://mal19992.github.io/sqlps/docs/api/com/polytechnik/sqlps/SQLst.html)
 type) can itself be interpolated by the `sql" ... "` interpolator,
 e.g:
 ```
@@ -152,19 +152,19 @@ val q=sql""" SELECT * FROM tableX WHERE x=${aLong(33)} AND z IN (${q1})"""
 // created q:SQLst q.getSQL()=" SELECT * FROM tableX WHERE x=? AND z IN (SELECT y FROM tableX WHERE z=?)"
 ```
 when issued `q.setAllValues(st)` the SQL prepared statement will be properly initialized regardless the
-order/depth of used "sql pieces" of [SQLst](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLst.html) type. Inside the interpolator there is a recursive tree walk, this makes it possible.
+order/depth of used "sql pieces" of [SQLst](https://mal19992.github.io/sqlps/docs/api/com/polytechnik/sqlps/SQLst.html) type. Inside the interpolator there is a recursive tree walk, this makes it possible.
 
 The proposed library allows a seamless integration
 of scala language variables and SQL prepared statement variables.
 The goal was achieved by introduction of two types
-[SQLArg](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLArg.html)
+[SQLArg](https://mal19992.github.io/sqlps/docs/api/com/polytechnik/sqlps/SQLArg.html)
 and
-[SQLst](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLst.html)
+[SQLst](https://mal19992.github.io/sqlps/docs/api/com/polytechnik/sqlps/SQLst.html)
 and treating them specially during `sql"..."` interpolation.
 
 In some cases
 it is convenient to create
-[SQLst](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLst.html)
+[SQLst](https://mal19992.github.io/sqlps/docs/api/com/polytechnik/sqlps/SQLst.html)
 directly, without `sql"..."` interpolation, e.g. let we have an array of `data:(Long,Int)` tuples,
 then
 ```
@@ -181,7 +181,7 @@ val q=sql"INSERT INTO tableX VALUES "+
 //   st.setLong(1,101L);st.setInt(2,1);st.setLong(3,102L);st.setInt(4,2);st.setLong(5,103L);st.setInt(6,3);
 ```
 and the values will be properly bound by `q.selAllValues(st)` or using 
-[ReadObjs](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/ReadObjs$.html)
+[ReadObjs](https://mal19992.github.io/sqlps/docs/api/com/polytechnik/sqlps/ReadObjs$.html)
 wrapper
 ```
 // extract a Tuple2[Long,Int] from a ResultSet
@@ -191,9 +191,9 @@ val res=ReadObjs(q,extractT)(some_jdbc_connection)
 // scala.collection.Seq[(Long,Int)] is terurned
 ```
 where the method
-[mergeWithSeparator](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLst$.html#mergeWithSeparator(Seq[SQLst],String):SQLst)
+[mergeWithSeparator](https://mal19992.github.io/sqlps/docs/api/com/polytechnik/sqlps/SQLst$.html#mergeWithSeparator(Seq[SQLst],String):SQLst)
 is used to combine individual
-[SQLst](https://mal19992.github.io/sqlps/docs/api/com/padverb/sqlps/SQLst.html)
+[SQLst](https://mal19992.github.io/sqlps/docs/api/com/polytechnik/sqlps/SQLst.html)
 together.
 
 # License

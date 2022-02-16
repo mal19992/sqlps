@@ -1,4 +1,4 @@
-package com.padverb.sqlps;
+package com.polytechnik.sqlps;
 
 /**
   *  Execute an UPDATE/INSERT type of statement.

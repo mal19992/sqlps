@@ -1,4 +1,4 @@
-package com.padverb.sqlps;
+package com.polytechnik.sqlps;
 
 /** An interface to a single prepared statement argument
 */

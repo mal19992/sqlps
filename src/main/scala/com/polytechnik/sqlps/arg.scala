@@ -1,4 +1,4 @@
-package com.padverb.sqlps;
+package com.polytechnik.sqlps;
 
 /** Commonky used prepared statement argument types. */
 object arg {

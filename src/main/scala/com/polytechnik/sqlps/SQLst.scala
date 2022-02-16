@@ -1,4 +1,4 @@
-package com.padverb.sqlps;
+package com.polytechnik.sqlps;
 
 class SQLst(private val parts:scala.collection.immutable.Seq[String],private val args:scala.collection.Seq[Any]){
 
