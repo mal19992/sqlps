@@ -17,7 +17,7 @@ use scala structures generating a piece of SQL, these structures are
 are then manually combined to an SQL request.
 
 For reading the data a wrapper of
-[java.sql.RedultSet](https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/ResultSet.html)
+[java.sql.ResultSet](https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/ResultSet.html)
 is typically easy to write as all resultset columns have their own names.
 For creating SQL it is just a string concatenation operation
 if programming language values are directly incorporated into the request,
