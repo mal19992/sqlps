@@ -196,7 +196,7 @@ is used to combine individual
 [SQLst](https://mal19992.github.io/sqlps/docs/api/com/polytechnik/sqlps/SQLst.html)
 together.
 
-#Caveats
+# Caveats
 There is a hard limit of 32767 JDBC prepared statement arguments
 [see link](https://luppeng.wordpress.com/2020/05/20/postgresql-jdbc-driver-upper-limit-on-parameters-in-preparedstatement/).
 An SQL with too many prepared statement arguments may fail for this reason.
