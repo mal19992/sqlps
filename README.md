@@ -196,6 +196,13 @@ is used to combine individual
 [SQLst](https://mal19992.github.io/sqlps/docs/api/com/polytechnik/sqlps/SQLst.html)
 together.
 
+#Caveats
+There is a hard limit of 32767 JDBC prepared statement arguments
+[see link](https://luppeng.wordpress.com/2020/05/20/postgresql-jdbc-driver-upper-limit-on-parameters-in-preparedstatement/).
+An SQL with too many prepared statement arguments may fail for this reason.
+A proper way is to fix JDBC driver.
+
+
 # License
 [This software](https://github.com/mal19992/sqlps) is available under the
 [GPLV3](https://github.com/mal19992/sqlps/blob/master/LICENSE)
