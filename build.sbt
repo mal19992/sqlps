@@ -2,14 +2,14 @@ name := "sqlps"
 version := "0.1.0"
 
 
-scalaVersion := "2.13.8"
+scalaVersion := "2.13.10"
 
-target in Compile in doc := baseDirectory.value / "docs/api/"
+Compile / doc := baseDirectory.value / "docs/api/"
 
 libraryDependencies ++= Seq(
 
-  "com.typesafe.play" %% "play-json" % "2.10.0-RC5",
-  "org.postgresql" % "postgresql" % "42.3.1",
+  "com.typesafe.play" %% "play-json" % "2.10.0-RC7",
+  "org.postgresql" % "postgresql" % "42.5.0",
   "com.sun.mail" % "jakarta.mail" % "2.0.1",
   "commons-validator" % "commons-validator" % "1.7",
   "org.apache.commons" % "commons-text" % "1.9",

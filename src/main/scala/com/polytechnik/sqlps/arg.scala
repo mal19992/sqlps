@@ -28,6 +28,7 @@ object arg {
   def aString(a:String,sql:String="?"):SQLArg=new SimpleOneArg[String](v=a,sql=sql,_.setString(_,_))
   def aObject(a:Object,sql:String="?"):SQLArg=new SimpleOneArg[Object](v=a,sql=sql,_.setObject(_,_))
   def aURL(a:java.net.URL,sql:String="?"):SQLArg=new SimpleOneArg[java.net.URL](v=a,sql=sql,_.setURL(_,_))
+  def aUUID(a:java.util.UUID,sql:String="?"):SQLArg=new SimpleOneArg[java.util.UUID](v=a,sql=sql,_.setObject(_,_))
 
 
   def aArrayOfLong(a:scala.collection.Seq[Long],sql:String="?"):SQLArg=new SimpleOneArg[scala.collection.Seq[Long]](v=a,sql=sql,(s,n,v)=>{
