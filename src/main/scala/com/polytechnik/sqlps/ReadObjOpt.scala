@@ -43,7 +43,11 @@ object ReadObjOpt{
   def apply[T](
     toSearch: SQLst,
     extractT:java.sql.ResultSet=>T,
-    flagClosePreparedStatement:Boolean=true)=new ReadObjOpt[T](
-    toSearch,extractT,flagClosePreparedStatement
+    flagClosePreparedStatement:Boolean=true,
+    flagConnectionCommit:Boolean=false)=new ReadObjOpt[T](
+      toSearch,
+      extractT=extractT,
+      flagClosePreparedStatement=flagClosePreparedStatement,
+      flagConnectionCommit=flagConnectionCommit
   )
 }

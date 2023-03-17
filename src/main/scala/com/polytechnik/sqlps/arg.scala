@@ -43,6 +43,10 @@ object arg {
     s.setArray(n,s.getConnection().createArrayOf("VARCHAR",scala.jdk.javaapi.CollectionConverters.asJava(a).toArray()))
   })
 
+  def aArrayOfObject(sqlObjType:String,a:scala.collection.Seq[Object],sql:String="?"):SQLArg=new SimpleOneArg[scala.collection.Seq[Object]](v=a,sql=sql,(s,n,v)=>{
+    s.setArray(n,s.getConnection().createArrayOf(sqlObjType,scala.jdk.javaapi.CollectionConverters.asJava(a).toArray()))
+  })
+
   /** A two--argument of Long type example.
     *  @param a First value
     *  @param a2 Second value
