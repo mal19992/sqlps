@@ -1,7 +1,7 @@
 package com.polytechnik.sqlps;
 
 /** Commonky used prepared statement argument types. */
-object STDarg {
+object SQLargs {
   private class SimpleOneArg[T](
     private val v:T,
     private val sql:String,
