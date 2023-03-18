@@ -49,7 +49,7 @@ to create an object of
 type
 An example:
 ```
-import com.polytechnik.sqlps.arg._ // implicit sql"...", aLong, aString, etc...
+import com.polytechnik.sqlps.STDarg._ // implicit sql"...", aLong, aString, etc...
 
 val q=sql"""SELECT * FROM tableX WHERE y=${aLong(33)}"""
 // created q:SQLst ; q.getSQL()="SELECT * FROM tableX WHERE y=?"
@@ -92,7 +92,7 @@ is the
 [setAllValues](https://mal19992.github.io/sqlps/docs/api/com/polytechnik/sqlps/SQLst.html#setAllValues(s:java.sql.PreparedStatement):Int)
 that performs SQL initialization of the prepared statements, e.g.:
 ```
-import com.polytechnik.sqlps.arg._ // implicit sql"...", aLong, aString, etc...
+import com.polytechnik.sqlps.STDarg._ // implicit sql"...", aLong, aString, etc...
 
 val q=sql"""SELECT * FROM tableX WHERE y=${aLong(33)} and z=${aString("abc")}"""
 // created q:SQLst, getSQL() is: SELECT * FROM tableX WHERE y=? and z=?
@@ -111,7 +111,7 @@ There are two convenience wrappers:
 For example
 ```
 import com.polytechnik.sqlps._
-import com.polytechnik.sqlps.arg._ // implicit sql"...", aLong, aString, etc...
+import com.polytechnik.sqlps.STDarg._ // implicit sql"...", aLong, aString, etc...
 
 // extract a Tuple2[Long,String] from a ResultSet
 val extractT:java.sql.ResultSet=>Tuple2[Long,String]=rs=>(rs.getLong("y"),rs.getString("z"))
