@@ -36,6 +36,8 @@ object  SQLst {
     StringContext.checkLengths(e.args, e.parts)
     val pi = e.parts.iterator
     val ai = e.args.iterator
+    if(pi.size!=ai.size+1) throw new IllegalArgumentException("Size mismatch");
+
     val bldr = new java.lang.StringBuilder(process(pi.next()))
     val fs = new scala.collection.mutable.ArrayBuffer[(java.sql.PreparedStatement,Int)=>Int]()
     while (ai.hasNext) {
