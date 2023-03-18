@@ -28,5 +28,9 @@ class ExecuteUpdate(
 object ExecuteUpdate{
    def apply(
      toSearch: SQLst,
-     flagClosePreparedStatement:Boolean=true)=new ExecuteUpdate(toSearch,flagClosePreparedStatement)
+     flagClosePreparedStatement:Boolean=true,
+     flagConnectionCommit:Boolean=false)=new ExecuteUpdate(
+       toSearch,
+       flagClosePreparedStatement=flagClosePreparedStatement,
+       flagConnectionCommit=flagConnectionCommit)
 }
