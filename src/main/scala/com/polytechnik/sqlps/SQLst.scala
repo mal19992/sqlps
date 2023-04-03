@@ -2,6 +2,8 @@ package com.polytechnik.sqlps;
 
 class SQLst(private val parts:scala.collection.immutable.Seq[String],private val args:scala.collection.Seq[Any]){
 
+  if(parts.size!=args.size+1) throw new IllegalArgumentException("Size mismatch");
+
   private lazy val ps=SQLst.sqlPSInterpolator(this)
   /** Init all values of a prepared statement.
     *  @return The total number of values set.
