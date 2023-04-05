@@ -30,6 +30,20 @@ object SQLargs {
   def aURL(a:java.net.URL,sql:String="?"):SQLArg=new SimpleOneArg[java.net.URL](v=a,sql=sql,_.setURL(_,_))
   def aUUID(a:java.util.UUID,sql:String="?"):SQLArg=new SimpleOneArg[java.util.UUID](v=a,sql=sql,_.setObject(_,_))
 
+  /** Is this a good idea? 
+    */
+  def a(a: Any, sql: String = "?"): SQLArg = {
+    a match {
+      case a: Long    => aLong(a, sql)
+      case a: Int     => aInt(a, sql)
+      case a: Double  => aDouble(a, sql)
+      case a: Boolean => aBoolean(a, sql)
+      case a: String  => aString(a, sql)
+      case a: java.net.URL => aURL(a, sql)
+      case a: java.util.UUID => aUUID(a, sql)
+      case a => throw new RuntimeException("call setObject directly.") //Object  => aObject(a, sql)
+    }
+  }
 
   def aArrayOfLong(a:scala.collection.Seq[Long],sql:String="?"):SQLArg=new SimpleOneArg[scala.collection.Seq[Long]](v=a,sql=sql,(s,n,v)=>{
     s.setArray(n,s.getConnection().createArrayOf("bigint",scala.jdk.javaapi.CollectionConverters.asJava(a).toArray()))

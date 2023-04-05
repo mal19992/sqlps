@@ -8,13 +8,11 @@ class SQLst(private val parts:scala.collection.immutable.Seq[String],private val
   /** Init all values of a prepared statement.
     *  @return The total number of values set.
     */
-  def setAllValues(s:java.sql.PreparedStatement):Int={
-    var n=1 // prepared statements args start with 1
-    for(x <- ps.functs){
-      n=n+x(s,n)
-    }
-    n-1
+  def setAllValues(s: java.sql.PreparedStatement): Int ={
+    // SQL prepared statements args start with 1!!!
+    ps.functs.foldLeft(1)((n, x) => n + x(s, n)) - 1
   }
+
   def getSQL():String=ps.sql
 
   def appendString(s:String):SQLst=SQLst.merge(this,SQLst.fromString(s))
@@ -31,6 +29,8 @@ class SQLst(private val parts:scala.collection.immutable.Seq[String],private val
 }
 
 object  SQLst {
+  def empty = new SQLst(List(""), Seq.empty)
+
   private class LinearizedTree(val functs:scala.collection.Seq[(java.sql.PreparedStatement,Int)=>Int],val sql:String)
 
   private val process: String => String=StringContext.processEscapes
