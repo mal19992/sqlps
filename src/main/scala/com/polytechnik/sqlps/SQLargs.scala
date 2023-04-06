@@ -32,6 +32,7 @@ object SQLargs {
 
   /** Is this a good idea? 
     */
+  /* BAD IDEA. null and etc.
   def a(a: Any, sql: String = "?"): SQLArg = {
     a match {
       case a: Long    => aLong(a, sql)
@@ -44,6 +45,7 @@ object SQLargs {
       case a => throw new RuntimeException("call setObject directly.") //Object  => aObject(a, sql)
     }
   }
+   */
 
   def aArrayOfLong(a:scala.collection.Seq[Long],sql:String="?"):SQLArg=new SimpleOneArg[scala.collection.Seq[Long]](v=a,sql=sql,(s,n,v)=>{
     s.setArray(n,s.getConnection().createArrayOf("bigint",scala.jdk.javaapi.CollectionConverters.asJava(a).toArray()))
