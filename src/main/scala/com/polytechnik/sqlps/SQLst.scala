@@ -36,14 +36,13 @@ object  SQLst {
   private val process: String => String=StringContext.processEscapes
   private def sqlPSInterpolator(e:SQLst): LinearizedTree = {
     StringContext.checkLengths(e.args, e.parts)
-    val pi = e.parts.iterator
-    val ai = e.args.iterator
-    if(pi.size!=ai.size+1) throw new IllegalArgumentException("Size mismatch");
+    // already in constructor
+    //if(e.parts.size!=e.args.size+1) throw new IllegalArgumentException("Size mismatch");
 
-    val bldr = new java.lang.StringBuilder(process(pi.next()))
+    val bldr = new java.lang.StringBuilder(process(e.parts.head))
     val fs = new scala.collection.mutable.ArrayBuffer[(java.sql.PreparedStatement,Int)=>Int]()
-    while (ai.hasNext) {
-      ai.next() match {
+    for((pstr,arg) <- e.parts.tail.zip(e.args)){
+      arg match {
         case a:SQLst => {
           val l=sqlPSInterpolator(a)
           fs.appendAll(l.functs)
@@ -57,7 +56,7 @@ object  SQLst {
           bldr.append(a)
         }
       }
-      bldr.append(process(pi.next()))
+      bldr.append(process(pstr))
     }
     new LinearizedTree(fs,bldr.toString)
   }
