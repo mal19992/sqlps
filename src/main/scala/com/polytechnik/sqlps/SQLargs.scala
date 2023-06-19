@@ -47,17 +47,25 @@ object SQLargs {
   }
    */
 
-  def aArrayOfLong(a:scala.collection.Seq[Long],sql:String="?"):SQLArg=new SimpleOneArg[scala.collection.Seq[Long]](v=a,sql=sql,(s,n,v)=>{
+  def aArrayOfLong(a:scala.collection.Seq[Long],sql:String="?::bigint[]"):SQLArg=new SimpleOneArg[scala.collection.Seq[Long]](v=a,sql=sql,(s,n,v)=>{
     s.setArray(n,s.getConnection().createArrayOf("bigint",scala.jdk.javaapi.CollectionConverters.asJava(a).toArray()))
   })
 
 
-  def aArrayOfInt(a:scala.collection.Seq[Int],sql:String="?"):SQLArg=new SimpleOneArg[scala.collection.Seq[Int]](v=a,sql=sql,(s,n,v)=>{
-    s.setArray(n,s.getConnection().createArrayOf("int",scala.jdk.javaapi.CollectionConverters.asJava(a).toArray()))
+  def aArrayOfInt(a:scala.collection.Seq[Int],sql:String="?::integer[]"):SQLArg=new SimpleOneArg[scala.collection.Seq[Int]](v=a,sql=sql,(s,n,v)=>{
+    s.setArray(n,s.getConnection().createArrayOf("integer",scala.jdk.javaapi.CollectionConverters.asJava(a).toArray()))
   })
 
+  def aArrayOfDouble(a:scala.collection.Seq[Double],sql:String="?::float8[]"):SQLArg=new SimpleOneArg[scala.collection.Seq[Double]](v=a,sql=sql,(s,n,v)=>{
+    s.setArray(n,s.getConnection().createArrayOf("float8",scala.jdk.javaapi.CollectionConverters.asJava(a).toArray()))
+  })
+
+  def aArrayOfFloat(a:scala.collection.Seq[Float],sql:String="?::float4[]"):SQLArg=new SimpleOneArg[scala.collection.Seq[Float]](v=a,sql=sql,(s,n,v)=>{
+    s.setArray(n,s.getConnection().createArrayOf("float4",scala.jdk.javaapi.CollectionConverters.asJava(a).toArray()))
+   })
+
   def aArrayOfString(a:scala.collection.Seq[String],sql:String="?"):SQLArg=new SimpleOneArg[scala.collection.Seq[String]](v=a,sql=sql,(s,n,v)=>{
-    s.setArray(n,s.getConnection().createArrayOf("VARCHAR",scala.jdk.javaapi.CollectionConverters.asJava(a).toArray()))
+    s.setArray(n,s.getConnection().createArrayOf("text",scala.jdk.javaapi.CollectionConverters.asJava(a).toArray()))
   })
 
   def aArrayOfObject(sqlObjType:String,a:scala.collection.Seq[Object],sql:String="?"):SQLArg=new SimpleOneArg[scala.collection.Seq[Object]](v=a,sql=sql,(s,n,v)=>{

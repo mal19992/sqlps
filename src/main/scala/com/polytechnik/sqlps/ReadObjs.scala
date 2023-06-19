@@ -20,6 +20,7 @@ class ReadObjs[T](
     val st=connection.prepareStatement(toSearch.getSQL())
     // initialize all JDBC arguments
     toSearch.setAllValues(st)
+    //if(com.padverb.C.diagLevel>10) System.err.println("ReadObjs: st="+st);
     val res = st.executeQuery();
     while (res.next()) {
       result += extractT(res)

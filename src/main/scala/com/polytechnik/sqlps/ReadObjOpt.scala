@@ -20,6 +20,7 @@ class ReadObjOpt[T](
     val st=connection.prepareStatement(toSearch.getSQL())
     // initialize all JDBC arguments
     toSearch.setAllValues(st)
+    //if(com.padverb.C.diagLevel>10) System.err.println("ReadObjOpt: st="+st);
     val res = st.executeQuery();
     var n=0
     while (res.next()) {
